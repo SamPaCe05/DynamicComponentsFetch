@@ -3,13 +3,14 @@ import type { userInfo } from "./types";
 import UserCard from "./components/UserCard";
 function App() {
   const gitHubApi = "https://api.github.com/users";
-  const token = process.env.REACT_APP_GITHUB_TOKEN;
+  // const token = import.meta.env.VITE_GITHUB_TOKEN;
+
   const [profile, setProfile] = useState<userInfo[]>([]);
   async function fetching(url: string): Promise<userInfo[]> {
     try {
       const response = await fetch(url, {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
         },
       });
       const data = await response.json();
@@ -27,7 +28,7 @@ function App() {
 
   return (
     <Fragment>
-      <section className="flex flex-row justify-around gap-3">
+      <section className="max-w-7xl mx-auto grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 justify-around gap-3">
         {profile.map((card) => (
           <UserCard
             key={card.id}
