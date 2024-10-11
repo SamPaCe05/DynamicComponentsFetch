@@ -12,10 +12,13 @@ export default function UserCard({
   html_url,
 }: userInfo) {
   // const token = import.meta.env.VITE_GITHUB_TOKEN;
+
   const [followers, setFollowers] = useState<number>(0);
   const [repos, setRepos] = useState<number>(0);
 
   async function fectCard(url: string, url2: string) {
+    const s = performance.now();
+
     try {
       const [responseF, responseR] = await Promise.all([
         fetch(url, {
@@ -35,6 +38,9 @@ export default function UserCard({
       ]);
       setFollowers(dataF.length);
       setRepos(dataR.length);
+      const e = performance.now();
+
+      console.log(e - s, "ms UserCard");
     } catch (error) {
       console.error("Error fetching followers or repos:", error);
     }
@@ -73,9 +79,9 @@ export default function UserCard({
 
         <button
           onClick={() => (window.location.href = html_url)}
-          className="bg-buttonGh hover:bg-buttonHover rounded-lg py-3 w-full block mx-auto cursor-pointer"
+          className="bg-buttonGh capitalize hover:bg-buttonHover rounded-lg py-3 w-full block mx-auto cursor-pointer"
         >
-          Visitar Perfil
+          visit profile
         </button>
       </article>
     </Fragment>

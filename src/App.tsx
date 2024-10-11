@@ -1,12 +1,15 @@
 import { Fragment, useEffect, useState } from "react";
 import type { userInfo } from "./types";
 import UserCard from "./components/UserCard";
+import Header from "./components/Header";
 function App() {
   const gitHubApi = "https://api.github.com/users";
   // const token = import.meta.env.VITE_GITHUB_TOKEN;
 
   const [profile, setProfile] = useState<userInfo[]>([]);
   async function fetching(url: string): Promise<userInfo[]> {
+    const s = performance.now();
+
     try {
       const response = await fetch(url, {
         headers: {
@@ -15,6 +18,8 @@ function App() {
       });
       const data = await response.json();
       setProfile(data);
+      const e = performance.now();
+      console.log(e - s, "ms App");
       return data;
     } catch (error) {
       alert(`Error de tipo ${error}`);
@@ -28,7 +33,9 @@ function App() {
 
   return (
     <Fragment>
-      <section className="max-w-7xl mx-auto grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 justify-around gap-3">
+      <Header></Header>
+
+      <section className="max-w-7xl mx-auto grid lg:grid-cols-5 custom-medium:grid-cols-4 sm:grid-cols-3 grid-cols-2 justify-around gap-3">
         {profile.map((card) => (
           <UserCard
             key={card.id}
