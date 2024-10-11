@@ -1,45 +1,40 @@
 import { Fragment, useEffect, useState } from "react";
 import type { userInfo } from "./types";
-// import Header from "./components/Header";
 import UserCard from "./components/UserCard";
-// import footer from "./components/footer";
 function App() {
-  async function fetching(url: string) {
-    if (["followers, repos"].includes(url)) {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data.lenght;
-      } catch (error) {
-        alert(`Error de tipo ${error}`);
-      }
-    } else {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setProfile(data);
-      } catch (error) {
-        alert(`Error de tipo ${error}`);
-      }
+  const gitHubApi = "https://api.github.com/users";
+  const token = process.env.REACT_APP_GITHUB_TOKEN;
+  const [profile, setProfile] = useState<userInfo[]>([]);
+  async function fetching(url: string): Promise<userInfo[]> {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
+      const data = await response.json();
+      setProfile(data);
+      return data;
+    } catch (error) {
+      alert(`Error de tipo ${error}`);
+      throw error;
     }
   }
-  const gitHubApi = "https://api.github.com/users";
-  const [profile, setProfile] = useState<userInfo[]>([]);
+
   useEffect(() => {
     fetching(gitHubApi);
   }, []);
 
-  fetching(gitHubApi);
-
   return (
     <Fragment>
-      <section>
+      <section className="flex flex-row justify-around gap-3">
         {profile.map((card) => (
           <UserCard
+            key={card.id}
             login={card.login}
             avatar_url={card.avatar_url}
             id={card.id}
-            url={card.url}
+            html_url={card.html_url}
             repos_url={card.repos_url}
             followers_url={card.followers_url}
           />
