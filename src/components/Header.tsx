@@ -10,7 +10,7 @@ export default function Header() {
       >
         <img src={user} width={70} height={70} alt="Logo Principal" />
         <h1 className=" text-white font-black text-5xl  text-center uppercase">
-          some users from github!
+        some github users!
         </h1>
       </header>
     </Fragment>

@@ -2,9 +2,10 @@ import { Fragment, useEffect, useState } from "react";
 import type { userInfo } from "./types";
 import UserCard from "./components/UserCard";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 function App() {
   const gitHubApi = "https://api.github.com/users";
-  // const token = import.meta.env.VITE_GITHUB_TOKEN;
+
 
   const [profile, setProfile] = useState<userInfo[]>([]);
   async function fetching(url: string): Promise<userInfo[]> {
@@ -35,7 +36,11 @@ function App() {
     <Fragment>
       <Header></Header>
 
-      <section className="max-w-7xl mx-auto grid lg:grid-cols-5 custom-medium:grid-cols-4 sm:grid-cols-3 grid-cols-2 justify-around gap-3">
+      <section
+        className="max-w-7xl mx-auto grid lg:grid-cols-5 
+      custom-medium:grid-cols-4 sm:grid-cols-3 grid-cols-2 
+      justify-around gap-3"
+      >
         {profile.map((card) => (
           <UserCard
             key={card.id}
@@ -48,6 +53,8 @@ function App() {
           />
         ))}
       </section>
+
+      <Footer></Footer>
     </Fragment>
   );
 }

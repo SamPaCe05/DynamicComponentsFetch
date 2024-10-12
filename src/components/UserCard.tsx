@@ -11,8 +11,6 @@ export default function UserCard({
   repos_url,
   html_url,
 }: userInfo) {
-  // const token = import.meta.env.VITE_GITHUB_TOKEN;
-
   const [followers, setFollowers] = useState<number>(0);
   const [repos, setRepos] = useState<number>(0);
 
@@ -48,7 +46,8 @@ export default function UserCard({
 
   useEffect(() => {
     fectCard(followers_url, repos_url);
-  }, [followers_url, repos_url]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Fragment>
@@ -78,7 +77,7 @@ export default function UserCard({
         </div>
 
         <button
-          onClick={() => (window.location.href = html_url)}
+          onClick={() => window.open(html_url, "_blank")}
           className="bg-buttonGh capitalize hover:bg-buttonHover rounded-lg py-3 w-full block mx-auto cursor-pointer"
         >
           visit profile
